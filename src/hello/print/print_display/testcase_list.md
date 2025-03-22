@@ -2,8 +2,10 @@
 
 Implementing `fmt::Display` for a structure where the elements must each be
 handled sequentially is tricky. The problem is that each `write!` generates a
-`fmt::Result`. Proper handling of this requires dealing with *all* the
-results. Rust provides the `?` operator for exactly this purpose.
+[`fmt::Result`][result], which might indicate an error. Proper handling of this requires
+checking for an error after each `write!`. 
+
+Doing this manually would be quite verbose (and unidiomatic), so rust provides a shorthand: [the `?` operator][q_mark]. This operator checks the returned [`fmt::Result`][result] for an error and returns that error if present.
 
 Using `?` on `write!` looks like this:
 
